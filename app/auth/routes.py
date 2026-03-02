@@ -3,7 +3,14 @@ from app import mongo
 from werkzeug.security import generate_password_hash, check_password_hash 
 from . import auth
 
-#@auth.route("/register",methods=["GET","POST"])
-@auth.route("/",methods=["GET","POST"])
+
+@auth.route("/register",methods=["GET","POST"])
 def register():
-    return render_template("hub.html")
+    if request.method=="POST":
+        name=request.form.get("name")
+        password=request.form.get("password")
+        re_password=request.form.get("re_password")
+        if password != re_password:
+            return render_template("register.html",e="Confirm Password not same")
+    
+    return render_template("register.html",e=None)

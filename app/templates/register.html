@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Hello welcome to ZeNote</h1>
+
+<form action="/register" method="post">
+    <input name="name" placeholder="name" type="text">
+    <input name="email" placeholder="email" type="email">
+    <input name="password" placeholder="password" type="password">
+    <input name="re_password"placeholder="retype password" type="password">
+    <input type="submit">
+</form>
+
+
+<span {% if e %} style="color: red"{% endif %}>
+   {{e}}
+</span>
+
+
+{% endblock %}
