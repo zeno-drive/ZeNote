@@ -11,9 +11,9 @@
 </form>
 
 
-<span {% if e %} style="color: red"{% endif %}>
-   {{e}}
-</span>
+{% if e %}
+    <span style="color: red">{{ e }}</span>
+{% endif %}
 
 
 {% endblock %}

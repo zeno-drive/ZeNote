@@ -19,3 +19,22 @@ class User(UserMixin):
             self._email = email_info.normalized  
         except EmailNotValidError as e:
             raise ValueError(str(e))
+def passwordvalid(password):
+        upperflag=0
+        lowerflag=0
+        specialflag=0
+        lenthflag=0
+        for s in password:
+            if s.isupper():
+                upperflag=1
+            elif s.islower():
+                lowerflag=1
+            elif s.isspace():
+                raise ValueError("Password cannot have blank space")
+            elif s in ['@','_','-']:
+                specialflag=1
+        if len(password) >=6:
+            lenthflag=1
+        if upperflag+lowerflag+specialflag+lenthflag !=4:
+            raise ValueError("Password must have at least 6 characters and at least 1 lower 1 upper 1 special[@,_,-]")
+        return True
