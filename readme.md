@@ -17,6 +17,7 @@
 - [Contact](#contact)
 
 ## Overview
+### folder overview
 notetaking-app/
 │
 ├── app/
@@ -55,6 +56,11 @@ notetaking-app/
 ├── .gitignore
 ├── requirements.txt
 └── run.py                   ← entry point
+### schema
+
+users:   { _id, name, email, hash }
+folders: { _id, name, user_id }
+notes:   { _id, title, content, tags:[], folder_id, user_id, created_at, updated_at }
 ## Features
 
 ## Getting Started

@@ -22,3 +22,8 @@ def create_app():
     app.register_blueprint(folders)
 
     return app
+@login_manager.user_loader
+def load_user(user_id):
+    from bson import ObjectId
+    user_data = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+    return User(user_data) if user_data else None
