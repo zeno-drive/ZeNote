@@ -25,7 +25,7 @@ def register():
         hash=generate_password_hash(password)
         user={"name": name,"email": email,"hash": hash}
         mongo.db.users.insert_one(user)
-        return render_template("hub.html",e=f"{hash}")
+        return render_template("dashboard.html")
         
     
     return render_template("register.html",e=None)
@@ -37,7 +37,7 @@ def login():
         if mongo.db.users.find_one({"email": email}):
             user=mongo.db.users.find_one({"email": email})
             if check_password_hash (user["hash"],password):
-                return render_template("register.html",e=f"{hash}")
+                return render_template("dashboard.html")
             else:
                 return render_template("login.html",e=f"password or email was wrong")
         else:
