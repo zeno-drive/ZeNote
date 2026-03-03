@@ -1,5 +1,7 @@
 # ZeNote
 
+A multi-user note-taking web app built with Flask, MongoDB, and Jinja2.
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -9,81 +11,141 @@
   - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
-- [API Reference](#api-reference)
+- [Tech Stack](#tech-stack)
 - [Contributing](#contributing)
-- [Testing](#testing)
 - [Changelog](#changelog)
 - [License](#license)
 - [Contact](#contact)
 
 ## Overview
-### folder overview
-notetaking-app/
-│
+
+ZeNote is a web-based note-taking application that supports multiple users with secure authentication. Users can organize notes into folders, tag them for easy retrieval, and search across their content.
+
+### Project Structure
+
+```
+ZeNote/
 ├── app/
 │   ├── __init__.py          ← creates the Flask app
-│   ├── config.py            ← secret key, MongoDB URI, etc.
-│   │
+│   ├── config.py            ← secret key, MongoDB URI
+│   ├── models.py            ← User class, validators, quotes
 │   ├── auth/
 │   │   ├── __init__.py
 │   │   └── routes.py        ← register, login, logout
-│   │
 │   ├── notes/
 │   │   ├── __init__.py
 │   │   └── routes.py        ← create, read, edit, delete notes
-│   │
 │   ├── folders/
 │   │   ├── __init__.py
 │   │   └── routes.py        ← create, delete folders
-│   │
-│   ├── static/
-│   │   └── css/
-│   │       └── style.css
-│   │
+│   ├── static/css/style.css
 │   └── templates/
-│       ├── base.html        ← shared layout
-│       ├── auth/
-│       │   ├── login.html
-│       │   └── register.html
-│       ├── notes/
-│       │   ├── index.html
-│       │   ├── view.html
-│       │   └── edit.html
-│       └── folders/
-│           └── index.html
-│
-├── .env                     ← secrets, never commit this
+│       ├── layout.html      ← shared base layout
+│       ├── hub.html
+│       ├── dashboard.html
+│       ├── register.html
+│       └── login.html
+├── .env                     ← secrets, never commit
 ├── .gitignore
 ├── requirements.txt
 └── run.py                   ← entry point
-### schema
+```
 
-users:   { _id, name, email, hash }
-folders: { _id, name, user_id }
-notes:   { _id, title, content, tags:[], folder_id, user_id, created_at, updated_at }
+### Database Schema
+
+| Collection | Fields |
+|------------|--------|
+| users | { _id, name, email, hash } |
+| folders | { _id, name, user_id } |
+| notes | { _id, title, content, tags:[], folder_id, user_id, created_at, updated_at } |
+
 ## Features
+
+- Multi-user accounts with secure registration and login
+- Password hashing with Werkzeug
+- Session management with Flask-Login
+- Organize notes into folders
+- Tag notes for easy categorization
+- Search across notes
+- Dark / Light theme toggle
+- Random quotes in footer
 
 ## Getting Started
 
 ### Prerequisites
 
+- Python 3.10+
+- MongoDB Atlas account (or local MongoDB)
+- pip and virtualenv
+
 ### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/zeno-drive/ZeNote.git
+cd ZeNote
+```
+
+2. Create and activate a virtual environment:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+4. Create a `.env` file in the project root:
+```
+MONGO_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/zenote
+SECRET_KEY=your_secret_key_here
+```
+
+5. Run the app:
+```bash
+python run.py
+```
 
 ## Usage
 
+Register an account at `/register`, then log in at `/login`. From the dashboard you can create folders and notes, tag content, and search across your notes. The theme toggle in the navbar switches between light and dark mode.
+
 ## Configuration
 
-## API Reference
+All configuration is loaded from the `.env` file via `app/config.py`. Required variables:
+
+- `MONGO_URI` — MongoDB connection string
+- `SECRET_KEY` — Random secret string for session signing
+
+## Tech Stack
+
+- Python Flask
+- Jinja2
+- MongoDB Atlas
+- Flask-PyMongo
+- Flask-Login
+- Werkzeug
+- Bootstrap 5
+- python-dotenv
+- email-validator
 
 ## Contributing
 
-## Testing
+Pull requests are welcome. For major changes please open an issue first.
 
 ## Changelog
 
+- v0.1.0 — Initial release: auth, folders, notes, search
+
 ## License
 
+MIT
+
 ## Contact
+
+GitHub: https://github.com/zeno-drive/ZeNote
 
 ---
 

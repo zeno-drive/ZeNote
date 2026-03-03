@@ -47,9 +47,6 @@ def register():
         user_data = mongo.db.users.find_one({"email": email})
         login_user(User(user_data))
         return redirect(url_for("auth.dashboard"))
-    
-        
-    
     return render_template("register.html",e=None)
 @auth.route("/login",methods=["GET","POST"])
 def login():
