@@ -1,6 +1,7 @@
 from flask_login import UserMixin
 from email_validator import validate_email,EmailNotValidError
 from werkzeug.security import generate_password_hash, check_password_hash
+import random
 class User(UserMixin):
     def __init__(self, user_data):
         self.id = str(user_data["_id"])
@@ -48,3 +49,8 @@ quotelist={"Anaïs Nin":"In the journal, I am at ease.",
            "Christina Baldwin":"Journal writing is a voyage to the interior.",
            "Keri Smith":"We’re drawn to making our mark, leaving a record to show we were here, and a journal is a great place to do it.",
            "Ernest Hemingway":"Write hard and clear about what hurts.",}
+
+
+def get_random_quote():
+    author = random.choice(list(quotelist.keys()))
+    return {"author": author, "quote": quotelist[author]}

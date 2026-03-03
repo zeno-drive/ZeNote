@@ -17,7 +17,7 @@
     --input-placeholder: rgba(255, 255, 255, 0.5);
 }
 .nav {
-    background-color: var(--nav-bg) !important;
+    background-color: #28a745 !important;
     /* Red band on top, Blue line on bottom */
     border-top: 5px solid #ea433b;
     border-bottom: 5px solid var(--bubble-baymax-border);

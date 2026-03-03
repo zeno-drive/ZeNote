@@ -2,7 +2,20 @@ from flask import render_template,request,redirect,flash,url_for
 from app import mongo
 from werkzeug.security import generate_password_hash, check_password_hash 
 from . import auth
-from app.models import passwordvalid
+from app.models import passwordvalid,User
+from flask_login import login_user, logout_user, login_required
+
+@auth.route("/dashboard")
+@login_required
+def dashboard():
+    return render_template("dashboard.html")
+
+@auth.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("auth.hub"))
+
 @auth.route("/",methods=["GET","POST"])
 def hub():
     return render_template("hub.html")
@@ -25,7 +38,10 @@ def register():
         hash=generate_password_hash(password)
         user={"name": name,"email": email,"hash": hash}
         mongo.db.users.insert_one(user)
-        return render_template("dashboard.html")
+        user_data = mongo.db.users.find_one({"email": email})
+        login_user(User(user_data))
+        return redirect(url_for("auth.dashboard"))
+    
         
     
     return render_template("register.html",e=None)
@@ -34,14 +50,15 @@ def login():
     if request.method=="POST":
         email=request.form.get("email")
         password=request.form.get("password")
-        if mongo.db.users.find_one({"email": email}):
-            user=mongo.db.users.find_one({"email": email})
+        user=mongo.db.users.find_one({"email": email})
+        if user:
             if check_password_hash (user["hash"],password):
-                return render_template("dashboard.html")
+                login_user(User(user))
+                return redirect(url_for("auth.dashboard"))
             else:
-                return render_template("login.html",e=f"password or email was wrong")
+                return render_template("login.html",e=f"Invalid password or email")
         else:
-            return render_template("login.html",e=f"email not registered")
+            return render_template("login.html",e=f"Invalid password or email")
         
     else:
         return render_template("login.html",e=None)
