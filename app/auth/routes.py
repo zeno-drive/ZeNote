@@ -3,12 +3,14 @@ from app import mongo
 from werkzeug.security import generate_password_hash, check_password_hash 
 from . import auth
 from app.models import passwordvalid,User
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required,current_user
 
 @auth.route("/dashboard")
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+    from bson import ObjectId
+    folders = mongo.db.folders.find({"user_id": ObjectId(current_user.id)})
+    return render_template("dashboard.html",folders=folders)
 
 @auth.route("/logout")
 @login_required
@@ -16,9 +18,13 @@ def logout():
     logout_user()
     return redirect(url_for("auth.hub"))
 
-@auth.route("/",methods=["GET","POST"])
+@auth.route("/")
 def hub():
-    return render_template("hub.html")
+    if current_user.is_authenticated:
+        return redirect(url_for("auth.dashboard"))
+    else:
+        return render_template("hub.html")
+    
 
 @auth.route("/register",methods=["GET","POST"])
 def register():
@@ -61,4 +67,9 @@ def login():
             return render_template("login.html",e=f"Invalid password or email")
         
     else:
-        return render_template("login.html",e=None)
+        if current_user.is_authenticated:
+            return redirect(url_for("auth.dashboard"))
+    return render_template("login.html", e=None)
+
+    
+        

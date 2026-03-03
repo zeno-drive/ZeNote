@@ -2,6 +2,12 @@ from flask_login import UserMixin
 from email_validator import validate_email,EmailNotValidError
 from werkzeug.security import generate_password_hash, check_password_hash
 import random
+""" Schema
+users:   { _id, name, email, hash }
+folders: { _id, name, user_id }
+notes:   { _id, title, content, tags:[], folder_id, user_id, created_at, updated_at }
+"""
+#---------------------main funtions----------------------------------------------------------
 class User(UserMixin):
     def __init__(self, user_data):
         self.id = str(user_data["_id"])
@@ -39,7 +45,7 @@ def passwordvalid(password):
         if upperflag+lowerflag+specialflag+lenthflag !=4:
             raise ValueError("Password must have at least 6 characters and at least 1 lower 1 upper 1 special[@,_,-]")
         return True
-
+#---------------------------------------------misc functions-----------------------------------
 quotelist={"Anaïs Nin":"In the journal, I am at ease.",
            "Kathleen Adams":"Your journal will stand as a chronicle of your growth, your hopes, your fears, your dreams, your ambitions, your sorrows, your serendipities.",
            "Arthur Wellesley":"When my journal appears, many statues must come down.",

@@ -1,9 +1,22 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1>Welcome back</h1>
+<h1>Welcome back, {{ current_user.name }}</h1>
 
-{% if e %}
-    <span style="color: red">{{ e }}</span>
-{% endif %}
+<div style="background-color: #d3d3d3; border-radius: 10px; padding: 20px; min-height: 400px; margin-top: 20px;">
+    <div class="d-flex flex-wrap gap-3">
+        {% if folders %}
+            {% for folder in folders %}
+                <a href="/folders/{{ folder._id }}" style="text-decoration: none;">
+                    <div style="width: 100px; text-align: center; cursor: pointer;">
+                        <div style="font-size: 4rem;">📁</div>
+                        <p style="color: #333; font-size: 0.85rem;">{{ folder.name }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <p style="color: #888;">No folders yet. Create one to get started.</p>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}
