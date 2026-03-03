@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Welcome back to ZeNote</h1>
+
+<form action="/login" method="post">
+    <input name="email" placeholder="email" type="email">
+    <input name="password" placeholder="password" type="password">
+    <input type="submit">
+</form>
+
+
+{% if e %}
+    <span style="color: red">{{ e }}</span>
+{% endif %}
+
+
+{% endblock %}

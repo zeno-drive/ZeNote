@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 from email_validator import validate_email,EmailNotValidError
-from werkzeug.security import generate_password_hash, check_password_hash 
+from werkzeug.security import generate_password_hash, check_password_hash
 class User(UserMixin):
     def __init__(self, user_data):
         self.id = str(user_data["_id"])

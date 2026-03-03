@@ -3,4 +3,8 @@
 <h1>hello There</h1>
 <a href="/register">Register</a>
 <a href="/login">Login</a>
+
+{% if e %}
+    <span style="color: red">{{ e }}</span>
+{% endif %}
 {% endblock %}

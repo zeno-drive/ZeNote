@@ -23,7 +23,25 @@ def register():
         if mongo.db.users.find_one({"email": email}):
             return render_template("register.html",e="Email already registered")
         hash=generate_password_hash(password)
-        return render_template("register.html",e=f"{hash}")
+        user={"name": name,"email": email,"hash": hash}
+        mongo.db.users.insert_one(user)
+        return render_template("hub.html",e=f"{hash}")
         
     
     return render_template("register.html",e=None)
+@auth.route("/login",methods=["GET","POST"])
+def login():
+    if request.method=="POST":
+        email=request.form.get("email")
+        password=request.form.get("password")
+        if mongo.db.users.find_one({"email": email}):
+            user=mongo.db.users.find_one({"email": email})
+            if check_password_hash (user["hash"],password):
+                return render_template("register.html",e=f"{hash}")
+            else:
+                return render_template("login.html",e=f"password or email was wrong")
+        else:
+            return render_template("login.html",e=f"email not registered")
+        
+    else:
+        return render_template("login.html",e=None)
