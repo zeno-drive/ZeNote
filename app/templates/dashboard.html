@@ -4,8 +4,8 @@
 
 <div style="background-color: #d3d3d3; border-radius: 10px; padding: 20px; min-height: 400px; margin-top: 20px;">
     <div class="d-flex flex-wrap gap-3">
-        {% if folders %}
-            {% for folder in folders %}
+        {% if user_folders %}
+            {% for folder in user_folders %}
                 <a href="/folders/{{ folder._id }}" style="text-decoration: none;">
                     <div style="width: 100px; text-align: center; cursor: pointer;">
                         <div style="font-size: 4rem;">📁</div>
@@ -17,6 +17,9 @@
             <p style="color: #888;">No folders yet. Create one to get started.</p>
         {% endif %}
     </div>
+</div>
+<div style="background-color: #d3d3d3; border-radius: 10px; padding: 20px; min-height: 40px; margin-top: 20px;">
+
 </div>
 
 {% endblock %}

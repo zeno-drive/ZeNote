@@ -5,13 +5,6 @@ from . import auth
 from app.models import passwordvalid,User
 from flask_login import login_user, logout_user, login_required,current_user
 
-@auth.route("/dashboard")
-@login_required
-def dashboard():
-    from bson import ObjectId
-    folders = mongo.db.folders.find({"user_id": ObjectId(current_user.id)})
-    return render_template("dashboard.html",folders=folders)
-
 @auth.route("/logout")
 @login_required
 def logout():
@@ -21,7 +14,7 @@ def logout():
 @auth.route("/")
 def hub():
     if current_user.is_authenticated:
-        return redirect(url_for("auth.dashboard"))
+        return redirect(url_for("folders.dashboard"))
     else:
         return render_template("hub.html")
     
@@ -68,5 +61,5 @@ def login():
             return redirect(url_for("auth.dashboard"))
     return render_template("login.html", e=None)
 
-    
-        
+
+
