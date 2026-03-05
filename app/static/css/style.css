@@ -2,30 +2,24 @@
     --bg-color: #ffffff;
     --main-gradient: linear-gradient(to bottom, #ffffff 0%, #f0f9ff 100%);
     --text-color: #444444;
-    --nav-bg: #ffffff;
-    --nav-text: #555555;
-    --footer-bg: #f8f9fa;
-    --input-placeholder: rgba(255, 255, 255, 0.7);
+    --nav-bg: #28a745;
+    --footer-bg: #28a745;
+    --box-bg: #d3d3d3;
+    --box-text: #333333;
+    --empty-text: #888888;
 }
+
 [data-theme="dark"] {
     --bg-color: #1a1a1a;
     --main-gradient: linear-gradient(to bottom, #1a1a1a 0%, #0d1b2a 100%);
     --text-color: #e0e0e0;
-    --nav-bg: #121212;
-    --nav-text: #ffffff;
-    --footer-bg: #111111;
-    --input-placeholder: rgba(255, 255, 255, 0.5);
+    --nav-bg: #1a5c2e;
+    --footer-bg: #1a5c2e;
+    --box-bg: #2e2e2e;
+    --box-text: #e0e0e0;
+    --empty-text: #aaaaaa;
 }
-.nav {
-    background-color: #28a745 !important;
-    /* Red band on top, Blue line on bottom */
-    border-top: 5px solid #ea433b;
-    border-bottom: 5px solid var(--bubble-baymax-border);
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 0.5rem 0;
-    transition: all 0.3s ease;
-}
 html, body {
     height: 100%;
     margin: 0;
@@ -45,14 +39,78 @@ main {
     background: var(--main-gradient);
     padding-bottom: 3rem;
 }
+
+/* ── Navbar ── */
+.navbar {
+    background-color: var(--nav-bg) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.navbar a,
+.navbar span {
+    color: white !important;
+}
+
+/* ── Footer ── */
 .footer {
-    background-color: var(--footer-bg);
-    color: var(--text-color);
-
-    /* Red band on top, Blue line on bottom */
-    border-top: 5px solid #ea433b;
-    border-bottom: 5px solid var(--bubble-baymax-border);
-
+    background-color: var(--footer-bg) !important;
+    color: white;
     padding: 1.5rem 0;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease;
+}
+
+.footer p,
+.footer small {
+    color: white !important;
+}
+
+/* ── Explorer boxes (dashboard, folder_hub) ── */
+.explorer-box {
+    background-color: var(--box-bg);
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 400px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.explorer-toolbar {
+    background-color: var(--box-bg);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.explorer-empty {
+    color: var(--empty-text);
+}
+
+/* ── Folder / Note items ── */
+.item-card {
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.item-card p {
+    color: var(--box-text);
+    font-size: 0.85rem;
+}
+
+.item-icon {
+    font-size: 4rem;
+}
+textarea {
+    background-color: var(--box-bg);
+    color: var(--text-color);
+    border: 1px solid #555;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.item-card .delete-btn {
+    display: none;
+}
+.item-card:hover .delete-btn {
+    display: block;
 }

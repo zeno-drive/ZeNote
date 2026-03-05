@@ -2,32 +2,35 @@
 {% block body %}
 <h1>Welcome back, {{ current_user.name }}</h1>
 
-<div style="background-color: #d3d3d3; border-radius: 10px; padding: 20px; min-height: 400px; margin-top: 20px;">
+<div class="explorer-box">
     <div class="d-flex flex-wrap gap-3">
         {% if user_folders %}
             {% for folder in user_folders %}
-                <a href="/folder_hub/{{folder._id}}" style="text-decoration: none;">
-                    <div style="width: 100px; text-align: center; cursor: pointer;">
-                        <div style="font-size: 4rem;">📁</div>
-                        <form action="/delete_folder" method="post">
-            <input type="hidden" name="folder_id" value="{{ folder._id }}">
-            <button type="submit">🗑️</button>
-        </form>
-                        <p style="color: #333; font-size: 0.85rem;">{{ folder.name }}</p>
-                    </div>
-                </a>
+                <div class="item-card">
+                    <a href="/folder_hub/{{ folder._id }}" style="text-decoration: none;">
+                        <div class="item-icon">📁</div>
+                        <p>{{ folder.name }}</p>
+                    </a>
+                    <form action="/delete_folder" method="post">
+                        <input type="hidden" name="folder_id" value="{{ folder._id }}">
+                        <button type="submit" class="delete-btn">🗑️</button>
+                    </form>
+                </div>
             {% endfor %}
         {% else %}
-            <p style="color: #888;">No folders yet. Create one to get started.</p>
+            <p class="explorer-empty">No folders yet. Create one to get started.</p>
         {% endif %}
     </div>
 </div>
-<div style="background-color: #d3d3d3; border-radius: 10px; padding: 20px; min-height: 40px; margin-top: 20px;">
-<form action="/dashboard" method="post" class="mb-3">
-    <input name="name" placeholder="Folder name" type="text">
-    <button type="submit">+ New Folder</button>
-</form>
 
+<div class="explorer-toolbar">
+    <form action="/dashboard" method="post" class="mb-3">
+        <input name="name" placeholder="Folder name" type="text">
+        <button type="submit">+ New Folder</button>
+    </form>
+    {% if e %}
+        <span style="color: red;">{{ e }}</span>
+    {% endif %}
 </div>
 
 {% endblock %}
