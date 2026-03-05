@@ -76,3 +76,11 @@ def folder_hub(folder_id):
 
         mongo.db.notes.insert_one(note)
         return redirect(url_for("folders.folder_hub", folder_id=folder_id))
+@folders.route("/delete_note",methods=["POST"])
+@login_required
+def delete_note():
+    note_id = request.form.get("note_id")
+    note=mongo.db.notes.find_one({"_id": ObjectId(note_id)})
+    folder_id=note["folder_id"]
+    mongo.db.notes.delete_one({"_id": ObjectId(note_id)})
+    return redirect(url_for("folders.folder_hub",folder_id=folder_id))
