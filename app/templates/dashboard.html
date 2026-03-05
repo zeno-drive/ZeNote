@@ -4,9 +4,9 @@
 
 <div style="background-color: #d3d3d3; border-radius: 10px; padding: 20px; min-height: 400px; margin-top: 20px;">
     <div class="d-flex flex-wrap gap-3">
-        {% if user_folders %}
-            {% for folder in user_folders %}
-                <a href="/folders/{{ folder._id }}" style="text-decoration: none;">
+        {% if notes %}
+            {% for note in notes %}
+                <a href="/folder_hub/{{folder._id}}" style="text-decoration: none;">
                     <div style="width: 100px; text-align: center; cursor: pointer;">
                         <div style="font-size: 4rem;">📁</div>
                         <form action="/delete_folder" method="post">

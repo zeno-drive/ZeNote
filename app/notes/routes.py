@@ -1,13 +1,13 @@
 from flask import render_template,request,redirect,flash,url_for
 from app import mongo
 from . import folders
+from . import notes
 from app.models import User
 from flask_login import login_required,current_user
 from bson import ObjectId
 from datetime import datetime
 
-  
-@folders.route("/dashboard",methods=["POST","GET"])
+@notes.route("/folder_hub",methods=["POST","GET"]) #needschanges
 @login_required
 def dashboard():
     user_folders = mongo.db.folders.find({"user_id": ObjectId(current_user.id)})
@@ -23,21 +23,13 @@ def dashboard():
         
         mongo.db.folders.insert_one(folder)
         return redirect(url_for("folders.dashboard"))
-@folders.route("/delete_folder",methods=["POST"])
+@notes.route("/delete_note",methods=["POST"])
 @login_required
-def delete_folder():
-    folder_id=request.form.get("folder_id")
-    mongo.db.notes.delete_many({"folder_id": ObjectId(folder_id)})
-    mongo.db.folders.delete_one({"_id": ObjectId(folder_id)})
+def delete_note():
+    note_id=request.form.get("note_id")
+    mongo.db.notes.delete_one({"_id": ObjectId(note_id)})
     return redirect(url_for("folders.dashboard"))
-@folders.route("/folder_hub",methods=["GET","POST"])
-@login_required
-def folder_hub():
-    if request.method=="GET":
-        folder_name=mongo.db.notes.find_many({"folder_id":})
-    else:
-        
-        note_name=request.form.get("name")    
+    
     
     
     
