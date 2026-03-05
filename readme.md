@@ -6,6 +6,7 @@ A multi-user note-taking web app built with Flask, MongoDB, and Jinja2.
 
 - [Overview](#overview)
 - [Features](#features)
+- [Todo](#todo)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -34,15 +35,17 @@ ZeNote/
 │   │   └── routes.py        ← register, login, logout
 │   ├── notes/
 │   │   ├── __init__.py
-│   │   └── routes.py        ← create, read, edit, delete notes
+│   │   └── routes.py        ← edit, save notes
 │   ├── folders/
 │   │   ├── __init__.py
-│   │   └── routes.py        ← create, delete folders
+│   │   └── routes.py        ← create, delete folders and notes
 │   ├── static/css/style.css
 │   └── templates/
 │       ├── layout.html      ← shared base layout
 │       ├── hub.html
 │       ├── dashboard.html
+│       ├── folder_hub.html
+│       ├── note_editor.html
 │       ├── register.html
 │       └── login.html
 ├── .env                     ← secrets, never commit
@@ -56,19 +59,42 @@ ZeNote/
 | Collection | Fields |
 |------------|--------|
 | users | { _id, name, email, hash } |
-| folders | { _id, name, user_id } |
-| notes | { _id, title, content, tags:[], folder_id, user_id, created_at, updated_at } |
+| folders | { _id, name, user_id, created_at } |
+| notes | { _id, name, content, tags:[], folder_id, user_id, created_at, modified_at } |
 
 ## Features
 
-- Multi-user accounts with secure registration and login
-- Password hashing with Werkzeug
-- Session management with Flask-Login
-- Organize notes into folders
-- Tag notes for easy categorization
-- Search across notes
-- Dark / Light theme toggle
-- Random quotes in footer
+### Done
+- [x] Multi-user accounts with secure registration and login
+- [x] Password hashing with Werkzeug
+- [x] Session management with Flask-Login
+- [x] Create and delete folders
+- [x] Create, delete, and edit notes
+- [x] Notes organized inside folders
+- [x] Tag notes for easy categorization
+- [x] Dark / Light theme toggle
+- [x] Random quotes in footer
+
+### Planned
+- [ ] Search notes by title, content, or tags
+- [ ] Markdown live preview in note editor
+- [ ] Improved CSS styling
+- [ ] Deploy to Render
+- [ ] Version history for notes
+
+## Todo
+
+### Next Up
+- [ ] Fix note link in `folder_hub.html` — clicking a note should open `/note_editor/<note_id>`
+- [ ] Search route — query notes by title or content using MongoDB text indexes
+- [ ] Add Markdown live preview using `marked.js`
+
+### Backlog
+- [ ] CSS overhaul — style forms, buttons, and layout properly
+- [ ] Deploy to Render with Gunicorn
+- [ ] Add `Procfile` for Render deployment
+- [ ] Version history — store previous note content on each save
+- [ ] Sharing — allow folders or notes to be shared between users
 
 ## Getting Started
 
@@ -110,7 +136,7 @@ python run.py
 
 ## Usage
 
-Register an account at `/register`, then log in at `/login`. From the dashboard you can create folders and notes, tag content, and search across your notes. The theme toggle in the navbar switches between light and dark mode.
+Register an account at `/register`, then log in at `/login`. From the dashboard you can create folders. Click a folder to open it and create notes inside. Click a note to open the editor and start writing. The theme toggle in the navbar switches between light and dark mode.
 
 ## Configuration
 
@@ -137,7 +163,7 @@ Pull requests are welcome. For major changes please open an issue first.
 
 ## Changelog
 
-- v0.1.0 — Initial release: auth, folders, notes, search
+- v0.1.0 — Auth, folders, notes CRUD complete
 
 ## License
 

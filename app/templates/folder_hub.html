@@ -7,7 +7,7 @@
     {% if folder_notes%}   
         {% for note in folder_notes %}
     <div style="width: 100px; text-align: center;">
-        <a href="#" style="text-decoration: none;">
+        <a href="/note_editor/{{note._id}}" style="text-decoration: none;">
             <div style="font-size: 4rem;">🗒️</div>
             <p style="color: #333; font-size: 0.85rem;">{{ note.name }}</p>
         </a>

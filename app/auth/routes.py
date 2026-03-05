@@ -41,7 +41,7 @@ def register():
         mongo.db.users.insert_one(user)
         user_data = mongo.db.users.find_one({"email": email})
         login_user(User(user_data))
-        return redirect(url_for("auth.dashboard"))
+        return redirect(url_for("folders.dashboard"))
     return render_template("register.html", e=None)
 
 
@@ -54,7 +54,7 @@ def login():
         if user:
             if check_password_hash(user["hash"], password):
                 login_user(User(user))
-                return redirect(url_for("auth.dashboard"))
+                return redirect(url_for("folders.dashboard"))
             else:
                 return render_template("login.html", e=f"Invalid password or email")
         else:
@@ -62,5 +62,5 @@ def login():
 
     else:
         if current_user.is_authenticated:
-            return redirect(url_for("auth.dashboard"))
+            return redirect(url_for("folders.dashboard"))
     return render_template("login.html", e=None)

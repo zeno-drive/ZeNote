@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>{{ note.name }}</h1>
+
+<form action="/note_editor/{{ note._id }}" method="post">
+    <textarea name="content" rows="20" style="width:100%; padding:10px;">{{ note.content or '' }}</textarea>
+    <button type="submit" class="btn btn-success mt-2">Save</button>
+</form>
+
+{% endblock %}
