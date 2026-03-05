@@ -4,27 +4,28 @@
 
 <div style="background-color: #d3d3d3; border-radius: 10px; padding: 20px; min-height: 400px; margin-top: 20px;">
     <div class="d-flex flex-wrap gap-3">
-        {% if folder_notes %}
-            {% for note in folder_notes %}
-                <a href="/folder_hub" style="text-decoration: none;">
-                    <div style="width: 100px; text-align: center; cursor: pointer;">
-                        <div style="font-size: 4rem;">🗒️</div>
-                        <form action="/delete_note" method="post">
+    {% if folder_notes%}   
+        {% for note in folder_notes %}
+    <div style="width: 100px; text-align: center;">
+        <a href="#" style="text-decoration: none;">
+            <div style="font-size: 4rem;">🗒️</div>
+            <p style="color: #333; font-size: 0.85rem;">{{ note.name }}</p>
+        </a>
+        <form action="/delete_note" method="post">
             <input type="hidden" name="note_id" value="{{ note._id }}">
             <button type="submit">🗑️</button>
         </form>
-                        <p style="color: #333; font-size: 0.85rem;">{{ note.name }}</p>
-                    </div>
-                </a>
-            {% endfor %}
-        {% else %}
+    </div>
+        {% endfor %}
+    {% else %}
             <p style="color: #888;">No notes yet. Create one to get started.</p>
-        {% endif %}
+    {% endif %}
     </div>
 </div>
 <div style="background-color: #d3d3d3; border-radius: 10px; padding: 20px; min-height: 40px; margin-top: 20px;">
-<form action="/folder_hub" method="post" class="mb-3">
+<form action="/folder_hub/{{folder._id}}" method="post" class="mb-3">
     <input name="name" placeholder="note name" type="text">
+    <input name="tags" placeholder="tags (comma separated)" type="text">
     <button type="submit">+ New note</button>
 </form>
 
