@@ -12,15 +12,26 @@ from datetime import datetime
 def dashboard():
     user_folders = mongo.db.folders.find({"user_id": ObjectId(current_user.id)})
     if request.method=="GET":
-        return render_template("dashboard.html",user_folders=user_folders)
+        return render_template("dashboard.html",user_folders=user_folders,e=None)
         
     else:    
-        folder_name=request.form.get("name")
+        folder_name=request.form.get("name").lower().strip()
+        if mongo.db.folders.find_one({"name": folder_name}):
+            return render_template("dashboard.html",user_folders=user_folders,e=f"folder with name {folder_name} already exists")
         ct = datetime.now()
         folder={"user_id":ObjectId(current_user.id),"name":folder_name,"created_at":ct}
         
         mongo.db.folders.insert_one(folder)
         return redirect(url_for("folders.dashboard"))
+@folders.route("/delete_folder",methods=["POST"])
+@login_required
+def delete_folder():
+    folder_id=request.form.get("folder_id")
+    mongo.db.notes.delete_many({"folder_id": ObjectId(folder_id)})
+    mongo.db.folders.delete_one({"_id": ObjectId(folder_id)})
+    return redirect(url_for("folders.dashboard"))
+    
+    
     
     
     

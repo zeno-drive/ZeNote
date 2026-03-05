@@ -9,6 +9,10 @@
                 <a href="/folders/{{ folder._id }}" style="text-decoration: none;">
                     <div style="width: 100px; text-align: center; cursor: pointer;">
                         <div style="font-size: 4rem;">📁</div>
+                        <form action="/delete_folder" method="post">
+            <input type="hidden" name="folder_id" value="{{ folder._id }}">
+            <button type="submit">🗑️</button>
+        </form>
                         <p style="color: #333; font-size: 0.85rem;">{{ folder.name }}</p>
                     </div>
                 </a>
@@ -19,6 +23,10 @@
     </div>
 </div>
 <div style="background-color: #d3d3d3; border-radius: 10px; padding: 20px; min-height: 40px; margin-top: 20px;">
+<form action="/dashboard" method="post" class="mb-3">
+    <input name="name" placeholder="Folder name" type="text">
+    <button type="submit">+ New Folder</button>
+</form>
 
 </div>
 
