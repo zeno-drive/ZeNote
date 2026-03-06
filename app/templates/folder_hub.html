@@ -3,17 +3,19 @@
 <h1>Inside {{ folder.name }}</h1>
 
 <div class="explorer-box">
+    <input id="note-search" placeholder="Search notes..." type="text" class="mb-3">
+    <input id="tag-search" placeholder="filter with tags" type="text" class="mb-3">
     <div class="d-flex flex-wrap gap-3">
         {% if folder_notes %}
             {% for note in folder_notes %}
-                <div class="item-card">
+                <div class="item-card" data-tags="{{ note.tags | join(',') }}">
                     <a href="/note_editor/{{ note._id }}" style="text-decoration: none;">
                         <div class="item-icon">🗒️</div>
                         <p>{{ note.name }}</p>
                     </a>
                     <form action="/delete_note" method="post">
                         <input type="hidden" name="note_id" value="{{ note._id }}">
-                        <button type="submit class="delete-btn">🗑️</button>
+                        <button type="submit" class="delete-btn">🗑️</button>
                     </form>
                 </div>
             {% endfor %}
@@ -24,14 +26,34 @@
 </div>
 
 <div class="explorer-toolbar">
+    {% if e %}
+        <span style="color: red;">{{ e }}</span>
+    {% endif %}
     <form action="/folder_hub/{{ folder._id }}" method="post" class="mb-3">
         <input name="name" placeholder="note name" type="text">
         <input name="tags" placeholder="tags (comma separated)" type="text">
         <button type="submit">+ New note</button>
     </form>
-    {% if e %}
-        <span style="color: red;">{{ e }}</span>
-    {% endif %}
+    
+    <script>
+    function filterNotes() {
+        const nameQuery = document.getElementById('note-search').value.toLowerCase();
+        const tagQuery = document.getElementById('tag-search').value.toLowerCase().trim();
+
+        document.querySelectorAll('.item-card').forEach(card => {
+            const name = card.querySelector('p').textContent.toLowerCase();
+            const tags = card.dataset.tags.toLowerCase();
+
+            const nameMatch = name.includes(nameQuery);
+            const tagMatch = tagQuery === '' || tags.includes(tagQuery);
+
+            card.style.display = (nameMatch && tagMatch) ? 'block' : 'none';
+        });
+    }
+
+    document.getElementById('note-search').addEventListener('input', filterNotes);
+    document.getElementById('tag-search').addEventListener('input', filterNotes);
+</script>
 </div>
 
 {% endblock %}

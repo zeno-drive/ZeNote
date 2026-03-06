@@ -3,6 +3,7 @@
 <h1>Welcome back, {{ current_user.name }}</h1>
 
 <div class="explorer-box">
+    <input id="folder-search" placeholder="Search folders..." type="text" class="mb-3">
     <div class="d-flex flex-wrap gap-3">
         {% if user_folders %}
             {% for folder in user_folders %}
@@ -24,13 +25,21 @@
 </div>
 
 <div class="explorer-toolbar">
+    {% if e %}
+        <span style="color: red;">{{ e }}</span>
+    {% endif %}
     <form action="/dashboard" method="post" class="mb-3">
         <input name="name" placeholder="Folder name" type="text">
         <button type="submit">+ New Folder</button>
     </form>
-    {% if e %}
-        <span style="color: red;">{{ e }}</span>
-    {% endif %}
 </div>
-
+<script>
+    document.getElementById('folder-search').addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        document.querySelectorAll('.item-card').forEach(card => {
+            const name = card.querySelector('p').textContent.toLowerCase();
+            card.style.display = name.includes(query) ? 'block' : 'none';
+        });
+    });
+</script>
 {% endblock %}
